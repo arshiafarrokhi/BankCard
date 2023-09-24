@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Card</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        html {
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: #1c1c25;
+
+        }
+
+
+        section::before {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: 40%;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(#021b79, #0575e6);
+            border-radius: 50%;
+        }
+
+        .card {
+            position: relative;
+            width: 508px;
+            height: 314px;
+            transform-style: preserve-3d;
+            perspective: 500px;
+        }
+
+        .card .view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transition: 1s;
+            backface-visibility: hidden;
+        }
+
+        /* .card:hover .view.front {
+            transform: rotateY(-180deg);
+        } */
+
+        .card .view.back {
+            transform: rotateY(-180deg);
+        }
+
+        /* .card:hover .view.back {
+            transform: rotateY(-360deg);
+        } */
+
+        .card .view.front::after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            right: 80px;
+            width: 60px;
+            height: 60px;
+            background: #fc4a1b;
+            border-radius: 50%;
+            opacity: 0.9;
+        }
+
+        .card .view.front::before {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: #FFD200;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+
+        .card .view.front .debit {
+            position: absolute;
+            left: 40px;
+            top: 30px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .card .view.front .bank {
+            position: absolute;
+            right: 40px;
+            top: 25px;
+            color: #fff;
+            font-weight: 500;
+            font-style: italic;
+            font-size: 24px;
+        }
+
+        .card .view.front .chip {
+            position: absolute;
+            top: 80px;
+            left: 30px;
+            max-width: 70px;
+        }
+
+        .card .view.front .number {
+            position: absolute;
+            bottom: 130px;
+            left: 40px;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 8px;
+            font-size: 24px;
+            text-shadow: 0 2px 1px #000005;
+        }
+
+        .card .view.front .valid {
+            position: absolute;
+            bottom: 90px;
+            left: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: 300;
+            line-height: 1em;
+            text-align: right;
+        }
+
+        .card .view.front .valid span:last-child {
+            margin-left: 20px;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .card .view.front .cardHolder {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            color: #fff;
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: 4px;
+        }
+
+        .card .view.back .blackbar {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            height: 60px;
+            background: #000;
+        }
+
+        .card .view.back .cvvtext {
+            position: absolute;
+            top: 120px;
+            left: 30px;
+        }
+
+        .card .view.back .cvvtext h5 {
+            color: #fff;
+            font-weight: 400;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card .view.back .cvvtext .whiteBar {
+            position: relative;
+            width: 400px;
+            height: 40px;
+            background: #fff;
+            margin-top: 5px;
+        }
+
+        .card .view.back .cvvtext .cvv {
+            position: relative;
+            background: #ccc;
+            color: #111;
+            width: 50px;
+            height: 35px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            left: 400px;
+            top: -38px;
+            font-style: italic;
+        }
+
+        .card .view.back .text {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            color: #fff;
+            font-size: 10px;
+            line-height: 1.4em;
+            font-weight: 300;
+        }
+
+        .betweenm {
+            margin-right: 15px;
+        }
+
+        .cardholdertt {
+            text-transform: uppercase;
+        }
+
+        .cardHolder {
+            background-color: transparent;
+            border: none;
+            width: 200px;
+            /* margin-left: 5px; */
+            color: white;
+        }
+
+        .cardHolder::placeholder {
+            color: white;
+            font-size: 15px;
+        }
+
+        #cvv2id {
+            background-color: transparent;
+            border: none;
+            width: 70px;
+            margin-left: 5px;
+            color: white;
+        }
+
+        #cvv2id::placeholder {
+            color: white;
+            font-size: 15px;
+        }
+
+        .num {
+            background-color: transparent;
+            border: none;
+            width: 70px;
+            margin-left: 5px;
+            color: white;
+            font-size: 20px;
+
+        }
+
+        .num::placeholder {
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .cvv2place {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            background-color: transparent;
+            border: none;
+            width: 58px;
+            /* margin-left: 5px; */
+            color: white;
+            font-size: 17px;
+        }
+
+        .cvv2place::placeholder {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            color: white;
+            font-size: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="card">
+            <div class="view front">
+                <h3 class="debit">Debit Card</h3>
+                <h3 class="bank">Bank Name</h3>
+                <img src="assets/img/sim-card-chip.png" class="chip" alt="Chip_image">
+                <h3 class="number">
+                    <input class="num1 num" placeholder="XXXX" type="text">
+                    <input class="num2 num" placeholder="XXXX" type="text">
+                    <input class="num3 num" placeholder="XXXX" type="text">
+                    <input class="num4 num" placeholder="XXXX" type="text">
+                </h3>
+                <h4 class="valid"><span class="betweenm">CVV2 : </span>
+                    <input class="cvv2place  " placeholder="1403" type="number" min="1399" max="1403"> <span>/ </span>
+                    <input class="cvv2place " placeholder="07" min="1" max="12" type="number">
+                </h4>
+                <input placeholder="CUSTOMER NAME" class="cardHolder"></input>
+
+            </div>
+        </div>
+    </section>
+</body>
+<Script>
+    // card holder 
+    let cardHolder = document.getElementsByClassName('cardHolder')[0]
+
+    cardHolder.addEventListener(('click'), () => {
+        // cardHolder.innerHTML = 'Name Sample'
+        cardHolder.setAttribute('contenteditable', true)
+        cardHolder.focus()
+        cardHolder.classList.add('cardholdertt')
+    })
+
+    // NUMBER
+    let num1 = document.getElementsByClassName('num1')[0]
+    let num2 = document.getElementsByClassName('num2')[0]
+    let num3 = document.getElementsByClassName('num3')[0]
+    let num4 = document.getElementsByClassName('num4')[0]
+
+    num1.addEventListener('input', (e) => {
+        let x = e.target.value
+        if (x.length > 4) {
+            e.target.value = x.substring(0, 4)
+            num2.focus()
+        } else {
+            cvv2.innerHTML = e.target.value
+        }
+    })
+    num2.addEventListener('input', (e) => {
+        let x = e.target.value
+        if (x.length > 4) {
+            e.target.value = x.substring(0, 4)
+            num3.focus()
+        } else {
+            cvv2.innerHTML = e.target.value
+        }
+    })
+    num3.addEventListener('input', (e) => {
+        let x = e.target.value
+        if (x.length > 4) {
+            e.target.value = x.substring(0, 4)
+            num4.focus()
+        } else {
+            cvv2.innerHTML = e.target.value
+        }
+    })
+    num4.addEventListener('input', (e) => {
+        let x = e.target.value
+        if (x.length > 4) {
+            e.target.value = x.substring(0, 4)
+        } else {
+            cvv2.innerHTML = e.target.value
+        }
+    })
+</Script>
+
+</html>
